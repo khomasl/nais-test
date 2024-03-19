@@ -109,7 +109,7 @@ describe('CancelablePromise test', () => {
 
     test('should be canceled immediately', async () => {
       let value = 0
-      const p1 = new CancelablePromise(resolve => setTimeout(() => value = 1, resolve(value)))
+      const p1 = new CancelablePromise(resolve => setTimeout(() => resolve(1), 100))
       const p2 = p1.then(v => v + 1)
       const p3 = p1.then(() => void 0)
 
