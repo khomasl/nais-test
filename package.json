@@ -4,7 +4,7 @@
   "description": "CancelablePromise Test",
   "main": "cancelable-promise.test.js",
   "scripts": {
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Alexander Lyakshev",
   "license": "ISC",
