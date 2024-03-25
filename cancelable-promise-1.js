@@ -12,7 +12,7 @@ class CancelablePromise {
       try {
         executor(
           (value) => (this.isCanceled ? reject({ isCanceled: true, value }) : resolve(value)),
-          (reason) => reject({ isCanceled:true, reason })
+          (reason) => reject({ isCanceled: true, reason })
         );
       } catch (err) {
           reject(err);
@@ -42,11 +42,10 @@ class CancelablePromise {
   }
 
   cancel() {
-    return {
-      ...this,
-      isCanceled: true
-    };
+    this.isCanceled = true
+    this.catch(()=>({ isCanceled: true }))
   }
+
 }
 
 module.exports = CancelablePromise;
