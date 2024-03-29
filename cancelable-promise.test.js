@@ -2,7 +2,7 @@
 // Develop a class CancelablePromise that behaves similarly to the native Promise class in JavaScript
 // but can cancel the entire promise chain from execution.
 
-const CancelablePromise = require('./cancelable-promise-1')
+const CancelablePromise = require('./cancelable-promise-3')
 
 const { describe, expect, test } = global
 
@@ -109,7 +109,7 @@ describe('CancelablePromise test', () => {
 
     test('should be canceled immediately', async () => {
       let value = 0
-      const p1 = new CancelablePromise(resolve => setTimeout(() => resolve(1), 100))
+      const p1 = new CancelablePromise(resolve => setTimeout(() => value = 1, resolve(value)))
       const p2 = p1.then(v => v + 1)
       const p3 = p1.then(() => void 0)
 
@@ -126,7 +126,7 @@ describe('CancelablePromise test', () => {
   })
 
   describe('#isCanceled', () => {
-    test('should change state on cancel()', () => {
+    test('should change state on cancel()', async () => {
       const p1 = new CancelablePromise(resolve => resolve(1))
       const p2 = p1.then(() => 2)
       const p3 = p1.then(() => 3)
@@ -143,6 +143,7 @@ describe('CancelablePromise test', () => {
       expect(p1.isCanceled).toBeTruthy()
       expect(p2.isCanceled).toBeTruthy()
       expect(p3.isCanceled).toBeTruthy()
+      await expect(p1).rejects.toEqual({ isCanceled: true })
     })
   })
 })
